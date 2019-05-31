@@ -1,5 +1,6 @@
 const express = require('express')
 const db = require('../data/helpers/actionModel')
+const projects_Db = require('../data/helpers/projectModel')
 const router = express.Router();
 router.use(express.json())
 
@@ -24,13 +25,24 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    db.insert(req.body)
-    .then(act => {
-        res.status(201).json(act)
+    projects_Db.get(req.body.project_id)
+    .then(proj => {
+        if(proj){
+            db.insert(req.body)
+            .then(act => {
+                res.status(201).json(act)
+            })
+            .catch(() => {
+                res.status(500).json({error: "Issue posting data to the server"})
+            })
+        }else{
+            res.status(404).json({message: "Please send a valid project ID"})
+        }
     })
     .catch(() => {
-        res.status(500).json({error: "Issue posting data to the server"})
+        res.status(500).json({error: "Issue retrieving data from the server"})
     })
+    
 })
 
 router.put('/:id', (req, res) => {
