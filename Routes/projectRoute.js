@@ -54,7 +54,7 @@ router.delete('/:id', (req, res) => {
 })
 
 router.get('/:id/actions', (req, res) => {
-    db.getProjectActions(req.body.project_id)
+    db.getProjectActions(req.params.id)
     .then(list => {
         res.send(list)
     })
