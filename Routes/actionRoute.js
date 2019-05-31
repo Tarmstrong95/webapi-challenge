@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     db.insert(req.body)
     .then(act => {
-        res.send(act)
+        res.status(201).json(act)
     })
     .catch(() => {
         res.status(500).json({error: "Issue posting data to the server"})
@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
     db.update(req.params.id)
     .then(act => {
-        res.send(act)
+        res.status(201).json(act)
     })
     .catch(() => {
         res.status(500).json({error: "Issue updating data on the server"})
@@ -46,7 +46,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     db.remove(req.params.id)
     .then(del => {
-        res.send({message: `Deleted ${del} actions`})
+        res.send(del)
     })
     .catch(() => {
         res.status(500).json({error: "Issue deleting data from the server"})

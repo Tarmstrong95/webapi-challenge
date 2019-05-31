@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     db.insert(req.body)
     .then(proj => {
-        res.send(proj)
+        res.status(201).json(proj)
     })
     .catch(() => {
         res.status(500).json({error: "Issue posting data to the server"})
@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
     db.update(req.params.id, req.body)
     .then(proj => {
-        res.send(proj)
+        res.status(201).json(proj)
     })
     .catch(() => {
         res.status(500).json({error: "Issue updating data on the server"})
